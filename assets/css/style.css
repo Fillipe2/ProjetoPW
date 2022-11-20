@@ -27,14 +27,16 @@
 
 .body {
     font: 1rem/1.5 var(--bs-font-sans-serif);
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     background-color: #6c757d;
 }
 
-.border {
+#container-cadastro {
     width: 750px;
     align-items: center;
     background-color: #dee2e6;
@@ -42,8 +44,15 @@
     margin: 20px;
 }
 
+#container-login {
+    align-items: center;
+    background-color: #dee2e6;
+    border-radius: 20px;
+    margin: 20px;
+}
+
 form {
-    margin: 20px; 
+    margin: 35px; 
 }
 
 .btn{

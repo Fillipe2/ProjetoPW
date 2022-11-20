@@ -25,37 +25,30 @@
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 }
 
-body {
+.body {
     font: 1rem/1.5 var(--bs-font-sans-serif);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #adb5bd;
+    background-color: #6c757d;
 }
 
-h1 {
-    margin: 30px;
-}
-
-a {
-    color: var(--bs-blue);
-}
-
-.border-5 {
-    width: 500px;
+.border {
+    width: 750px;
     align-items: center;
     background-color: #dee2e6;
-    border-radius: 6px;
-    margin: 200px;
+    border-radius: 20px;
+    margin: 20px;
 }
 
 form {
     margin: 20px; 
 }
 
-button {
-    margin: 20px;
+.btn{
+    margin: 10px;
+    width: 100px
 }
 
 input::-webkit-inner-spin-button {
@@ -63,5 +56,5 @@ input::-webkit-inner-spin-button {
 }
 
 .form-control {
-    width: 350px;
+    width: 250px;
 }

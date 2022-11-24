@@ -1,16 +1,41 @@
-function Login() {
-    var login = document.getElementById('login').value
-    var senha = document.getElementById('senha').value
+// Banco
+var request, db
 
-    if (login !== "" && senha !== ""){
-        window.location.href="C:/Fillipe/S.I/projeto%20PW/formCadastro.html"
-    } else {
-        alert('Preencha todos os campos!')
+function iniciandoBanco() {
+    request = indexedDB.open("FinancasDB", 2)
+
+    request.onupgradeneeded = function (event) {
+
+        db = event.target.result
+
+        // Adicionar os campos do banco
+        var armazena = db.createObjectStore("Financas", { keyPath: "id", autoIncrement: true })
+
+        armazena.createIndex("nome", "nome", { unique: false })
+
     }
 
+    request.onsuccess = function (event) {
+
+        db = event.target.result
+
+        
+        Registros()
+    }   
+}   
+
+function inserir() {
+    let nome= document.getElementById('nome').value
+    
+
+    var tabela = {
+        nome: `${nome}`
+    }
+
+    var inserindo = db.transaction('Financas', "readwrite")
+
+    var armazena = inserindo.objectStore('Financas')
+
+
 }
 
-function apagarCampos() {
-    document.getElementById('login').value = ''
-    document.getElementById('senha').value = ''
-}

@@ -1,6 +1,5 @@
 #input-data {
-    width: 90vw;
-    margin: 0 auto;
+    width: 790px;
     margin-top: 5vh;
     display: flex;
 }
@@ -18,8 +17,6 @@
     transition: 0.25s;
     outline: none;
 }
-
-
 
 .input-btn {
     flex: 1;
@@ -46,10 +43,15 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 #tabela {
-    width: 90%;
-    margin: 0 auto;
-    margin-top: 5vh;
+    margin: 4px;
+    margin-top: 1vh;
     border-collapse: collapse;
+}
+
+.divResumo{
+    width: 707px;
+    border-color: #383838;
+    border: solid 2px;
 }
 
 #tabela th {
@@ -59,12 +61,12 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     font-weight: 100;
 }
 
-#tabela td, th{
+#tabela td, th {
     border: 1px solid #ddd;
     padding: 6px;
 }
 
-#tabela td{
+#tabela td {
     padding: 4px;
 }
 
@@ -77,16 +79,14 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 .table-btn{
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    border-width: 0px;
-    background-color: transparent;
-    cursor: pointer;
+    width: 70px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .table-btn:hover {
     background-color: #383838;
     border-color: #383838;
     color: white;
+    cursor: pointer;
 } 

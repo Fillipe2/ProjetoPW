@@ -13,15 +13,18 @@
 
 <body onload="iniciandoBanco()">
     <div id="input-data">
-        <input id="data" class="input-text" placeholder="Data" type="date" required />
-        <input id="descricao" class="input-text" placeholder="Descrição" type="text" required />
-        <input id="valor" class="input-text" placeholder="Valor (R$)" type="number" required />
-        <input id="parcelas" class="input-text" placeholder="N° de Parcelas" type="text" required />
-
-        <input class="input-btn" type="button" value="Inserir" onclick="inserir()" />
-        <input class="input-btn" type="button" value="Confirmar Alteração" onclick="alterar()" />
-        <input class="input-btn" type="button" value="Buscar" onclick="buscar()" />
-        <input class="input-btn" type="button" value="Teste" onclick="proximoIndice()" />
+        <div id="inputs">
+            <input id="data" class="input-text" placeholder="Data" type="date" required />
+            <input id="descricao" class="input-text" placeholder="Descrição" type="text" required />
+            <input id="valor" class="input-text" placeholder="Valor (R$)" type="number" required />
+            <input id="parcelas" class="input-text" placeholder="N° de Parcelas" type="text" required />
+        </div>
+        <div id="botoes">
+            <input class="input-btn" type="button" value="Inserir" onclick="inserir()" />
+            <input class="input-btn" type="button" value="Confirmar Alteração" onclick="alterar()" />
+            <input class="input-btn" type="button" value="Buscar" onclick="buscar()" />
+            <input class="input-btn" type="button" value="Teste" onclick="proximoIndice()" />
+        </div>
     </div>
     <section>
         <table id="tabela">

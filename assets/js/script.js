@@ -4,6 +4,7 @@ function obterMes(data) {
     const mesNome = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
     objData.mes = parseInt(objData.mes) - 1
     dataReferencia = data
+    document.getElementById('mes').innerHTML = `${mesNome[objData.mes]} - ${data.slice(0, 4)}`
     return (`${mesNome[objData.mes]} - ${data.slice(0, 4)}`);
 }
 
@@ -33,7 +34,7 @@ function dividirDataParcelas(data) {
 }
 
 function teste() {
-    //alert("Botão sem ação.")
+    alert("Botão sem ação.")
 }
 
 function tratarQuebraDeAno(data) {

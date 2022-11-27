@@ -4,8 +4,14 @@ function obterMes(data) {
     return mesNome[mes];
 }
 
-function converteDataFormato(data) {
+function converteDataFormatoBR(data) {
     if (data != "") {
         return `${data.slice(8, 10)}/${data.slice(5, 7)}/${data.slice(0, 4)}`;
+    }
+}
+
+function converteDataFormatoEN(data) {
+    if (data != "") {
+        return(`${data.slice(6)}-${data.slice(3, 5)}-${data.slice(0, 2)}`)
     }
 }

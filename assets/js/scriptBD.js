@@ -1,4 +1,4 @@
-var request, db
+var request, db, linha
 
 function iniciandoBanco() {
     request = indexedDB.open("FinancasDB", 1)
@@ -8,6 +8,7 @@ function iniciandoBanco() {
         var Financas = db.createObjectStore("Financas", { keyPath: "id", autoIncrement: true });
         //Financas.add({ campo: 'Valor 1' });
         Financas.createIndex("mesReferencia", "mesReferencia", { unique: false })
+        Financas.createIndex("id", "id", { unique: true })
     }
 
     request.onsuccess = function (event) {
@@ -24,18 +25,17 @@ function iniciandoBanco() {
 
 function inserir() {
     //let descricao = document.getElementById('descricao').value
-    //let parcelas = document.getElementById('parcelas').value
     //let valor = Math.floor(Math.random() * 1000);
+    let movimento = proximoIndice();
+    console.log(proximoIndice())
     let data = document.getElementById('data').value
-    let valor = document.getElementById('valor').value
+    let valor = Number(document.getElementById('valor').value)
     let descricao = `Descrição ${Math.floor(Math.random() * 100)}`
-    let parcelas = 1
+    let parcelas = Number(document.getElementById('parcelas').value)
+    //let parcelas = Number(1)
     let mesReferencia = obterMes(data)
 
-    var dados = {
-        data: `${data}`, descricao: `${descricao}`, valor: `${valor}`, parcelas: `${parcelas}`, mesReferencia: `${mesReferencia}`
-    }
-
+    var dados
     var transaction = db.transaction('Financas', "readwrite")
 
     transaction.oncomplete = function (event) {
@@ -47,22 +47,34 @@ function inserir() {
     }
 
     var tbFinancas = transaction.objectStore('Financas')
+    var inserir
 
-    var inserir = tbFinancas.add(dados)
+    if (parcelas > 1) {
+        valor = valor / parcelas
+        console.log(`Iniciando os registros.`)
+        for (let i = 1; i <= parcelas; i++) {
+            console.log(`Movimento: ${movimento}`)
+            dados = { movimento: `${movimento}`, data: `${data}`, descricao: `${descricao}`, valor: `${valor}`, parcelas: `${i}/${parcelas}`, mesReferencia: `${mesReferencia}` }
+            inserir = tbFinancas.add(dados)
+        }
+
+    } else {
+        dados = { movimento: `${movimento}`, data: `${data}`, descricao: `${descricao}`, valor: `${valor}`, parcelas: `${parcelas}/${parcelas}`, mesReferencia: `${mesReferencia}` }
+        inserir = tbFinancas.add(dados)
+    }
+
     inserir.onerror = function (event) {
         console.log('Ocorreu um erro ao salvar o contato.')
     }
 
     inserir.onsuccess = function (event) {
         console.log('Contato salvo com sucesso.')
-        //buscarRegistros()
+        buscarMesReferencia(obterMes(String(new Date().toJSON().slice(0, 10))))
     }
 }
 
 
-function alterar(id) {
-    console.log(id, Number(id))
-
+function alterar() {
     var transaction = db.transaction('Financas', 'readwrite')
 
     transaction.oncomplete = function (event) {
@@ -75,16 +87,14 @@ function alterar(id) {
     }
 
     var tbFinancas = transaction.objectStore('Financas')
-    console.log(tbFinancas)
-    console.log(Number(id))
-    request = tbFinancas.get(Number(id))
+    request = tbFinancas.get(Number(linha))
 
     request.onerror = function (event) {
         console.log('Ocorreu um erro ao buscar o contato.')
     }
 
     request.onsuccess = function (event) {
-        console.log("teste")
+        console.log(request.result)
         var Financas = event.target.result
 
         let data = document.getElementById('data').value
@@ -98,29 +108,26 @@ function alterar(id) {
         Financas.parcelas = `${parcelas}`
 
         //Atualizando o registro no banco
+
         var requestUpdate = tbFinancas.put(Financas)
 
         //quando ocorrer erro ao atualizar o registro
         requestUpdate.onerror = function (event) {
-            console.log('Ocorreu um erro ao salvar o contato.')
+            console.log('Ocorreu um erro ao alterar o movimento.')
         }
 
         //quando o registro for atualizado com sucesso
         requestUpdate.onsuccess = function (event) {
-            console.log('Contato salvo com sucesso.')
-            buscarRegistrosIDB()
+            console.log('Movimento salvo com sucesso.')
+            buscarMesReferencia(obterMes(String(new Date().toJSON().slice(0, 10))))
         }
     }
 }
 
 function excluir(id) {
+    let row = id.parentNode.parentNode.id
     // Abrindo uma transação para ler/inserir/atualizar/excluir dados
     var transaction = db.transaction('Financas', "readwrite")
-
-    // Quando a transação é executada com sucesso
-    transaction.oncomplete = function (event) {
-        console.log('Transação finalizada com sucesso.')
-    }
 
     // Quando ocorre algum erro na transação
     transaction.onerror = function (event) {
@@ -131,22 +138,22 @@ function excluir(id) {
     var store = transaction.objectStore('Financas')
 
     //Excluindo o registro pela chave primaria
-    var requestDelete = store.delete(Number(id))
+    var requestDelete = store.delete(Number(row))
 
     //quando ocorrer um erro ao excluir o registro
     requestDelete.onerror = function (event) {
-        console.log('Ocorreu um erro ao excluir o contato.')
+        console.log('Ocorreu um erro ao excluir o movimento.')
     }
 
     //quando o registro for excluído com sucesso
     requestDelete.onsuccess = function (event) {
-        console.log('Contato excluído com sucesso.')
+        console.log('Movimento excluído com sucesso.')
         buscar()
     }
 }
 
 //* ******************BUSCAR*********************** */
-function buscar() {    
+function buscar() {
     var totalGasto = new (Number)
     var totalMovimentos = new (Number)
     //limpando o corpo da tabela
@@ -224,18 +231,20 @@ function addToTable(id) {
     let cell3 = row.insertCell(2)   //Inserindo as celulas da linha
     let cell4 = row.insertCell(3)   //Inserindo as celulas da linha
     let cell5 = row.insertCell(4)   //Inserindo as celulas da linha
+    let cell6 = row.insertCell(5) //Inserindo as celulas da linha
     row.id = id                     //Adicionando o id no elemento a ser criado
 
     //Criando o codigo do botão para remover a linha
-    // let btnCode = "<button class='table-btn' onclick='alterar(this)'>Alterar</button>"
-    // btnCode += "<button class='table-btn' onclick='excluir(this)'>Remover</button>"
+    let btnCode = "<button class='table-btn' onclick='updateToTable(this)'>Alterar</button>"
+    btnCode += "<button class='table-btn' onclick='excluir(this)'>Remover</button>"
 
     //Preenchendo as celulas da linha
     cell1.innerHTML = id
-    cell2.innerHTML = converteDataFormato(data)
+    cell2.innerHTML = converteDataFormatoBR(data)
     cell3.innerHTML = descricao
     cell4.innerHTML = `R$ ${valor}`
     cell5.innerHTML = parcelas
+    cell6.innerHTML = btnCode
 
     //Limpando os campos de inserção de dados
     document.getElementById('data').value = ""
@@ -245,4 +254,37 @@ function addToTable(id) {
 
     //Retornando 'false' para impedir o reload da pagina
     return false
+}
+
+function updateToTable(id) {
+    linha = id.parentNode.parentNode.id //Pegando o id do avô do botão    
+    var transaction = db.transaction('Financas')
+
+    var tbFinancas = transaction.objectStore('Financas')
+    request = tbFinancas.get(Number(linha))
+
+    request.onsuccess = function (event) {
+        document.getElementById('data').value = request.result.data
+        document.getElementById('descricao').value = request.result.descricao
+        document.getElementById('valor').value = request.result.valor
+        document.getElementById('parcelas').value = request.result.parcelas
+    }
+
+    //Retornando 'false' para impedir o reload da pagina
+    return false
+}
+
+function proximoIndice() {
+    var transaction = db.transaction('Financas', "readonly");
+    var store = transaction.objectStore('Financas');
+    var index = store.index("id");
+
+    //ordenando em ordem decrescente de nome
+    var request = index.openCursor(null, 'prev');
+    request.onsuccess = function (event) {
+        var cursor = event.target.result;
+        if (cursor) {
+            return(Number(cursor.value.id + 1));
+        }
+    }
 }

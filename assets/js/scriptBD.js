@@ -23,17 +23,14 @@ function iniciandoBanco() {
 }
 
 
-function inserir() {
-    //let descricao = document.getElementById('descricao').value
-    //let valor = Math.floor(Math.random() * 1000);
-    let movimento = proximoIndice();
-    console.log(proximoIndice())
+function inserir(movimento) {
+
     let data = document.getElementById('data').value
     let valor = Number(document.getElementById('valor').value)
-    let descricao = `Descrição ${Math.floor(Math.random() * 100)}`
+    let descricao = document.getElementById('descricao').value
     let parcelas = Number(document.getElementById('parcelas').value)
-    //let parcelas = Number(1)
-    let mesReferencia = obterMes(data)
+    let mesReferencia
+    let dataAuxiliar = data
 
     var dados
     var transaction = db.transaction('Financas', "readwrite")
@@ -48,17 +45,19 @@ function inserir() {
 
     var tbFinancas = transaction.objectStore('Financas')
     var inserir
-
+    
+    console.log(`Iniciando os registros.`)
     if (parcelas > 1) {
         valor = valor / parcelas
-        console.log(`Iniciando os registros.`)
         for (let i = 1; i <= parcelas; i++) {
-            console.log(`Movimento: ${movimento}`)
+            mesReferencia = obterMes(dataAuxiliar)
             dados = { movimento: `${movimento}`, data: `${data}`, descricao: `${descricao}`, valor: `${valor}`, parcelas: `${i}/${parcelas}`, mesReferencia: `${mesReferencia}` }
             inserir = tbFinancas.add(dados)
+            dataAuxiliar = dividirDataParcelas(dataAuxiliar)
         }
 
     } else {
+        mesReferencia = obterMes(data)
         dados = { movimento: `${movimento}`, data: `${data}`, descricao: `${descricao}`, valor: `${valor}`, parcelas: `${parcelas}/${parcelas}`, mesReferencia: `${mesReferencia}` }
         inserir = tbFinancas.add(dados)
     }
@@ -108,7 +107,6 @@ function alterar() {
         Financas.parcelas = `${parcelas}`
 
         //Atualizando o registro no banco
-
         var requestUpdate = tbFinancas.put(Financas)
 
         //quando ocorrer erro ao atualizar o registro
@@ -274,17 +272,19 @@ function updateToTable(id) {
     return false
 }
 
-function proximoIndice() {
+function inserirProximoIndice() {
     var transaction = db.transaction('Financas', "readonly");
     var store = transaction.objectStore('Financas');
     var index = store.index("id");
 
-    //ordenando em ordem decrescente de nome
-    var request = index.openCursor(null, 'prev');
-    request.onsuccess = function (event) {
-        var cursor = event.target.result;
+    //ordenando em ordem decrescente de id
+    var request2 = index.openCursor(null, 'prev');
+    request2.onsuccess = function (event) {
+        var cursor = event.target.result
         if (cursor) {
-            return(Number(cursor.value.id + 1));
+            inserir(Number(cursor.key + 1))
+        } else {
+            inserir(Number(1))
         }
     }
 }

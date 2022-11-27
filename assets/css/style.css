@@ -6,22 +6,48 @@ body {
     flex-direction: column;
     margin: 0;
     align-items: center;
-    background-color: #9F65D2;
+    background-color: #121212;
+    
+}
+
+h1 {
+    color: white;
+    font-size: 4em;
+    text-align: center;
+    margin: 10px;
+}
+
+h2 {
+    color: white;
+    font-size: 2em;
+    text-align: center;
+    margin: 10px;
+}
+
+#header{
+    width: 900px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 
+
 #input-data {
-    width: 790px;
-    height: 100px;
-    margin-top: 5vh;
+    width: 900px;
+    height: 150px;
+    margin: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    ;
     border: 1px solid white;
-    border-radius: 5px;
-    
+    border-radius: 10px;
+    background-color: grey;
+}
+
+#inputs {
+    margin-top: 10px;
 }
 
 .input-text {
@@ -39,7 +65,7 @@ body {
 }
 
 #botoes {
-    align-content: flex-end;
+    margin-top: 20px;
 }
 
 .input-btn {
@@ -69,16 +95,38 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     margin: 0;
 }
 
+#section{
+    margin: 10px;
+    width: 900px;
+    display: flex;
+    flex-direction: row;
+}
+
 #tabela {
-    margin: 4px;
-    margin-top: 1vh;
+    width: 650px;
     border-collapse: collapse;
+    margin-left: 1vh;
+    background-color: white;
 }
 
 .divResumo{
-    width: 707px;
-    border-color: #383838;
-    border: solid 2px;
+    width: 250px;
+    border-radius: 10px;
+    border: solid 1px white;
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+p{
+    margin-left: 2px;
+    color: white;
+}
+
+#tituloResumo {
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 #tabela th {
@@ -86,6 +134,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     padding: 7px;
     color: white;
     font-weight: 100;
+    justify-content: center;
 }
 
 #tabela td, th {
@@ -109,6 +158,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     width: 70px;
     margin-left: 5px;
     margin-right: 5px;
+    border-radius: 10px;
+    background-color: lightgrey;
 }
 
 .table-btn:hover {

@@ -1,4 +1,4 @@
-var request, db, linha
+var request, db, linha, dataReferencia
 
 function iniciandoBanco() {
     request = indexedDB.open("FinancasDB", 1)
@@ -14,7 +14,6 @@ function iniciandoBanco() {
     request.onsuccess = function (event) {
         db = event.target.result
         buscarMesReferencia(obterMes(String(new Date().toJSON().slice(0, 10))))
-        //Registros()
     }
 
     request.onerror = function (event) {
@@ -185,6 +184,7 @@ function buscar() {
 }
 
 function buscarMesReferencia(mesReferencia) {
+    mesReferencia
     var totalGasto = new (Number)
     var totalMovimentos = new (Number)
     var myTable = document.getElementById("tabela").querySelector("tbody")

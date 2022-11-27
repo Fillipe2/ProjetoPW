@@ -15,13 +15,13 @@
     <h1>Finanças</h1>
     <div id="header">
         <div>
-            <input class="input-btn" type="button" value="<< Mês anterior" onclick="" />
+            <input class="input-btn" id="mesAnterior" type="button" value="<< Mês anterior" onclick="mesAnterior()" />
         </div>
         <div>
             <h2 id="mes">Novembro</h2>
         </div>
         <div>
-            <input class="input-btn" type="button" value="Próximo mês >>" onclick="" />
+            <input class="input-btn" id="mesProximo" type="button" value="Próximo mês >>" onclick="mesProximo()" />
         </div>
     </div>
     <div id="input-data">
@@ -32,10 +32,10 @@
             <input id="parcelas" class="input-text" placeholder="N° de Parcelas" type="text" required />
         </div>
         <div id="botoes">
-            <input class="input-btn" type="button" value="Inserir" onclick="inserir()" />
+            <input class="input-btn" type="button" value="Inserir" onclick="inserirProximoIndice()" />
             <input class="input-btn" type="button" value="Confirmar Alteração" onclick="alterar()" />
             <input class="input-btn" type="button" value="Buscar" onclick="buscar()" />
-            <input class="input-btn" type="button" value="Teste" onclick="proximoIndice()" />
+            <input class="input-btn" type="button" value="Teste" onclick="teste()" />
         </div>
     </div>
     <section id="section">

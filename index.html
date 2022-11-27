@@ -6,12 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="/assets/js/script.js"></script>
-    <script src="/assets/js/scriptBD.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/scriptBD.js"></script>
     <title>Finanças</title>
 </head>
 
 <body onload="iniciandoBanco()">
+    <h1>Finanças</h1>
+    <div id="header">
+        <div>
+            <input class="input-btn" type="button" value="<< Mês anterior" onclick="" />
+        </div>
+        <div>
+            <h2 id="mes">Novembro</h2>
+        </div>
+        <div>
+            <input class="input-btn" type="button" value="Próximo mês >>" onclick="" />
+        </div>
+    </div>
     <div id="input-data">
         <div id="inputs">
             <input id="data" class="input-text" placeholder="Data" type="date" required />
@@ -26,7 +38,12 @@
             <input class="input-btn" type="button" value="Teste" onclick="proximoIndice()" />
         </div>
     </div>
-    <section>
+    <section id="section">
+        <div class="divResumo">
+            <p id="tituloResumo">Resumo do mês</p>
+            <p id="totalGasto" class="resumo"> Total das Despesas: </p>
+            <p id="totalMovimentos" class="resumo"> Total de Movimentos: </p>
+        </div>
         <table id="tabela">
             <thead>
                 <th>ID</th>
@@ -37,10 +54,6 @@
                 <th>Ações</th>
             <tbody></tbody>
         </table>
-        <div class="divResumo">
-            <p id="totalGasto" class="resumo"> Total das Despesas: </p>
-            <p id="totalMovimentos" class="resumo"> Total de Movimentos: </p>
-        </div>
 
     </section>
 </body>

@@ -1,0 +1,95 @@
+#input-data {
+    width: 790px;
+    margin-top: 5vh;
+    display: flex;
+}
+
+.input-text {
+    flex: 1;
+    min-width: 150px;
+    margin: 5px;
+    height: 30px;
+    padding-left: 5px;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #262626;
+    transition: 0.25s;
+    outline: none;
+}
+
+.input-btn {
+    flex: 1;
+    margin: 5px;
+    height: 35px;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #262626;
+    cursor: pointer;
+    transition: 0.3s all ease;
+}
+
+.input-btn:hover {
+    background-color: #383838;
+    border-color: #383838;
+    color: white;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+#tabela {
+    margin: 4px;
+    margin-top: 1vh;
+    border-collapse: collapse;
+}
+
+.divResumo {
+    width: 707px;
+    border-color: #383838;
+    border: solid 2px;
+}
+
+#tabela th {
+    background-color: grey;
+    padding: 7px;
+    color: white;
+    font-weight: 100;
+}
+
+#tabela td,
+th {
+    border: 1px solid #ddd;
+    padding: 6px;
+}
+
+#tabela td {
+    padding: 4px;
+}
+
+
+#tabela tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#tabela tr:hover {
+    background-color: #ddd;
+}
+
+.table-btn {
+    width: 70px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.table-btn:hover {
+    background-color: #383838;
+    border-color: #383838;
+    color: white;
+    cursor: pointer;
+}

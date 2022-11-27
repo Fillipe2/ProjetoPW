@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/styleBackup.css">
+    <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/scriptBD.js"></script>
+    <title>Finanças</title>
+</head>
+
+<body onload="iniciandoBanco()">
+    <div id="input-data">
+        <input id="data" class="input-text" placeholder="Data" type="date" required />
+        <input id="descricao" class="input-text" placeholder="Descrição" type="text" required />
+        <input id="valor" class="input-text" placeholder="Valor (R$)" type="number" required />
+        <input id="parcelas" class="input-text" placeholder="N° de Parcelas" type="text" required />
+
+        <input class="input-btn" type="button" value="Inserir" onclick="inserir()" />
+        <input class="input-btn" type="button" value="Confirmar Alteração" onclick="alterar()" />
+        <input class="input-btn" type="button" value="Buscar" onclick="buscar()" />
+        <input class="input-btn" type="button" value="Teste" onclick="proximoIndice()" />
+    </div>
+    <section>
+        <table id="tabela">
+            <thead>
+                <th>ID</th>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Parcela</th>
+                <th>Ações</th>
+            <tbody></tbody>
+        </table>
+        <div class="divResumo">
+            <p id="totalGasto" class="resumo"> Total das Despesas: </p>
+            <p id="totalMovimentos" class="resumo"> Total de Movimentos: </p>
+        </div>
+    </section>
+</body>
+
+</html>

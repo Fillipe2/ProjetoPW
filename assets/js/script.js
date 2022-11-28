@@ -8,38 +8,18 @@ function obterMes(data) {
     return (`${mesNome[objData.mes]} - ${data.slice(0, 4)}`);
 }
 
-function converteDataFormatoBR(data) {
-    if (data != "") {
-        return `${data.slice(8, 10)}/${data.slice(5, 7)}/${data.slice(0, 4)}`;
-    }
-}
-
-function converteDataFormatoEN(data) {
-    if (data != "") {
-        return (`${data.slice(6)}-${data.slice(3, 5)}-${data.slice(0, 2)}`)
-    }
-}
-
 function dividirDataParcelas(data) {
     if (data != "") {
         objData = DataJson(data)
 
         objData.mes = parseInt(objData.mes) + 1
-        if (objData.mes > 12) {
-            return tratarQuebraDeAno(`${objData.ano}-${objData.mes}-${objData.dia}`)
-        }
-
-        return (`${objData.ano}-${objData.mes}-${objData.dia}`)
+        return tratarQuebraDeAno(`${objData.ano}-${objData.mes}-${objData.dia}`)
     }
-}
-
-function teste() {
-    alert("Botão sem ação.")
 }
 
 function tratarQuebraDeAno(data) {
     objData = DataJson(data)
-    
+
     if (objData.mes == 13) {
         objData.mes = String("01")
         objData.ano = parseInt(objData.ano) + 1
@@ -47,7 +27,7 @@ function tratarQuebraDeAno(data) {
         objData.mes = String("12")
         objData.ano = parseInt(objData.ano) - 1
     }
-    
+
     if (String(objData.dia).length == 1) {
         String(objData.dia = "0" + objData.dia)
     }
@@ -62,12 +42,7 @@ function mesProximo() {
     objData = DataJson(dataReferencia)
     objData.mes = parseInt(objData.mes) + 1
 
-    if (objData.mes > 12) {
-        dataReferencia = tratarQuebraDeAno(`${objData.ano}-${objData.mes}-${objData.dia}`)
-    } else {
-        dataReferencia = `${objData.ano}-${objData.mes}-${objData.dia}`
-    }
-
+    dataReferencia = tratarQuebraDeAno(`${objData.ano}-${objData.mes}-${objData.dia}`)
     buscarMesReferencia(obterMes(dataReferencia))
 }
 
@@ -75,13 +50,7 @@ function mesAnterior() {
     objData = DataJson(dataReferencia)
     objData.mes = parseInt(objData.mes) - 1
 
-    if (objData.mes > 12) {
-        dataReferencia = tratarQuebraDeAno(`${objData.ano}-${objData.mes}-${objData.dia}`)
-    } else {
-        dataReferencia = tratarQuebraDeAno(`${objData.ano}-${objData.mes}-${objData.dia}`)
-        //dataReferencia = `${objData.ano}-${objData.mes}-${objData.dia}`
-    }
-
+    dataReferencia = tratarQuebraDeAno(`${objData.ano}-${objData.mes}-${objData.dia}`)
     buscarMesReferencia(obterMes(dataReferencia))
 }
 

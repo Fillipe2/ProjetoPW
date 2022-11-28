@@ -13,7 +13,8 @@ function iniciandoBanco() {
 
     request.onsuccess = function (event) {
         db = event.target.result
-        buscarMesReferencia(obterMes(String(new Date().toJSON().slice(0, 10))))
+        dataReferencia = String(new Date().toJSON().slice(0, 10))
+        buscarMesReferencia(obterMes(dataReferencia))
     }
 
     request.onerror = function (event) {
@@ -47,7 +48,7 @@ function inserir(movimento) {
     
     console.log(`Iniciando os registros.`)
     if (parcelas > 1) {
-        valor = valor / parcelas
+        valor = (valor/parcelas).toFixed(2)
         for (let i = 1; i <= parcelas; i++) {
             mesReferencia = obterMes(dataAuxiliar)
             dados = { movimento: `${movimento}`, data: `${data}`, descricao: `${descricao}`, valor: `${valor}`, parcelas: `${i}/${parcelas}`, mesReferencia: `${mesReferencia}` }
@@ -73,6 +74,8 @@ function inserir(movimento) {
 
 
 function alterar() {
+    document.getElementById("inserir").disabled = false;
+    document.getElementById("alterar").disabled = true;
     var transaction = db.transaction('Financas', 'readwrite')
 
     transaction.oncomplete = function (event) {
@@ -145,7 +148,7 @@ function excluir(id) {
     //quando o registro for excluído com sucesso
     requestDelete.onsuccess = function (event) {
         console.log('Movimento excluído com sucesso.')
-        buscar()
+        buscarMesReferencia(obterMes(dataReferencia))
     }
 }
 
@@ -216,21 +219,22 @@ function buscarMesReferencia(mesReferencia) {
 //Função para adicionar uma nova linha na tabela
 function addToTable(id) {
     //Definindo as variaveis e recebendo os dados
-    let data = document.getElementById('data').value
+    let data = DataJson(document.getElementById('data').value)
     let descricao = document.getElementById('descricao').value
     let valor = document.getElementById('valor').value
     let parcelas = document.getElementById('parcelas').value
     let tableBody = document.getElementById("tabela").querySelector("tbody")
 
-    let tableSize = tableBody.rows.length //Calculando o tamanho da Tabela
-    let row = tableBody.insertRow(tableSize) //Inserindo uma linha abaixo da Tabela
-    let cell1 = row.insertCell(0)   //Inserindo as celulas da linha
-    let cell2 = row.insertCell(1)   //Inserindo as celulas da linha
-    let cell3 = row.insertCell(2)   //Inserindo as celulas da linha
-    let cell4 = row.insertCell(3)   //Inserindo as celulas da linha
-    let cell5 = row.insertCell(4)   //Inserindo as celulas da linha
-    let cell6 = row.insertCell(5) //Inserindo as celulas da linha
-    row.id = id                     //Adicionando o id no elemento a ser criado
+    
+    let tableSize = tableBody.rows.length
+    let row = tableBody.insertRow(tableSize)
+    let cell1 = row.insertCell(0)   
+    let cell2 = row.insertCell(1)   
+    let cell3 = row.insertCell(2)   
+    let cell4 = row.insertCell(3)   
+    let cell5 = row.insertCell(4)   
+    let cell6 = row.insertCell(5) 
+    row.id = id
 
     //Criando o codigo do botão para remover a linha
     let btnCode = "<button class='table-btn' onclick='updateToTable(this)'>Alterar</button>"
@@ -238,7 +242,7 @@ function addToTable(id) {
 
     //Preenchendo as celulas da linha
     cell1.innerHTML = id
-    cell2.innerHTML = converteDataFormatoBR(data)
+    cell2.innerHTML = data.formatadaComBarra
     cell3.innerHTML = descricao
     cell4.innerHTML = `R$ ${valor}`
     cell5.innerHTML = parcelas
@@ -255,6 +259,9 @@ function addToTable(id) {
 }
 
 function updateToTable(id) {
+    document.getElementById("inserir").disabled = true;
+    document.getElementById("alterar").disabled = false;
+
     linha = id.parentNode.parentNode.id //Pegando o id do avô do botão    
     var transaction = db.transaction('Financas')
 

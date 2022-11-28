@@ -35,7 +35,6 @@ h2 {
 
 #input-data {
     width: 900px;
-    height: 150px;
     margin: 10px;
     display: flex;
     flex-direction: column;
@@ -44,6 +43,10 @@ h2 {
     border: 1px solid white;
     border-radius: 10px;
     background-color: grey;
+}
+
+#dados {
+    margin-top: 10px;
 }
 
 #inputs {

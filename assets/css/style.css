@@ -115,7 +115,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 #tabela {
     width: 650px;
     border-collapse: collapse;
-    margin-left: 1vh;
     background-color: white;
     text-align: center;
     margin-bottom: 10px;
